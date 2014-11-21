@@ -1,7 +1,6 @@
 <?php
 
 define("TOKEN", "wenbo");
-<<<<<<< HEAD
 include 'connect_mysql.php';
 include 'connect_yidong.php';
 include 'select_taocan.php';
@@ -9,25 +8,16 @@ include 'select_taocan.php';
 $wechatObj = new wechatCallbackapiTest();
 
 
-=======
-$wechatObj = new wechatCallbackapiTest();
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
 if (isset($_GET['echostr'])) {
     $wechatObj->valid();
 }else{
     $wechatObj->responseMsg();
 }
-<<<<<<< HEAD
 
 
 
 class wechatCallbackapiTest 
 {   
-=======
-class wechatCallbackapiTest
-{
-    $flag = 0;
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
     public function valid()
     {
         $echoStr = $_GET["echostr"];
@@ -71,7 +61,6 @@ class wechatCallbackapiTest
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-<<<<<<< HEAD
             $state = FindUser($fromUsername);
             $OrignState = $state;
             $state = $state % 10;
@@ -230,43 +219,6 @@ class wechatCallbackapiTest
                 break;
              }
             echo $resultStr;
-=======
-            
-            
-            switch($keyword)
-            {
-                case "4" :
-                	$msgType = "text";
-                    $contentStr = date("Y-m-d H:i:s",time())."\n欢迎来到Mobilehelper,我们为大家提供了如下的服务：\n 1.天气查询  \n 2.话费查询  \n 3.套餐最优查询 \n 4.menu";
-                	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-               	 	echo $resultStr;
-                	break;
-                
-                case "1" :
-                	global $flag = 1;
-                	$msgType = "text";
-                 	$contentStr = "请输入你要查询的城市：\n";
-                 	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                 	echo $resultStr;
-                	echo sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, global $flag);
-                	break;
-                
-                case "2" :
-                case "3" :
-                	$msgType = "text";
-                	$contentStr = date("Y-m-d H:i:s",time())."\nSorry :ERROR.";
-                	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-               	 	echo $resultStr;
-                	break;
-                
-                default :
-                    $msgType = "text";
-                	$contentStr = date("Y-m-d H:i:s",time())."\n欢迎来到Mobilehelper,我们为大家提供了如下的服务：\n 1.天气查询  \n 2.话费查询  \n 3.套餐最优查询";
-                	$resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-               	 	echo $resultStr;
-            }
-
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
         }else{
             echo "";
             exit;
@@ -274,17 +226,12 @@ class wechatCallbackapiTest
     }
     
     
-<<<<<<< HEAD
     private function responseCityWeather($postStr)
-=======
-    public function responseCityWeather()
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
     {
          $time = time();
          $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
          if (!empty($postStr)){
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-<<<<<<< HEAD
             $RX_TYPE = trim($postObj->MsgType);
             $result = $this->receiveText($postObj);
             echo $result;
@@ -298,38 +245,6 @@ class wechatCallbackapiTest
         return 0;
     }
              
-=======
-            $fromUsername = $postObj->FromUserName;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
-            $time = time();
-            $textTpl = "<xml>
-                        <ToUserName><![CDATA[%s]]></ToUserName>
-                        <FromUserName><![CDATA[%s]]></FromUserName>
-                        <CreateTime>%s</CreateTime>
-                        <MsgType><![CDATA[%s]]></MsgType>
-                        <Content><![CDATA[%s]]></Content>
-                        <FuncFlag>0</FuncFlag>
-                        </xml>";
-            $RX_TYPE = trim($postObj->MsgType);
-            switch ($RX_TYPE)
-            {
-                case "event":
-                	$result = $this->receiveEvent($postObj);
-                    break;
-                case "text":
-                    $result = $this->receiveText($postObj);
-                    break;
-            }
-            $this->logger("T ".$result);
-            echo $result;
-        }else{
-            echo "";
-            exit;
-        }
-    }
-    
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
      private function receiveEvent($object)
     {
         $content = "";
@@ -357,21 +272,12 @@ class wechatCallbackapiTest
     private function transmitText($object, $content)
     {
         $textTpl = "<xml>
-<<<<<<< HEAD
 		<ToUserName><![CDATA[%s]]></ToUserName>
 		<FromUserName><![CDATA[%s]]></FromUserName>
 		<CreateTime>%s</CreateTime>
 		<MsgType><![CDATA[text]]></MsgType>
 		<Content><![CDATA[%s]]></Content>
 		</xml>";
-=======
-<ToUserName><![CDATA[%s]]></ToUserName>
-<FromUserName><![CDATA[%s]]></FromUserName>
-<CreateTime>%s</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[%s]]></Content>
-</xml>";
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
         $result = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content);
         return $result;
     }
@@ -385,19 +291,13 @@ class wechatCallbackapiTest
         <Description><![CDATA[%s]]></Description>
         <PicUrl><![CDATA[%s]]></PicUrl>
         <Url><![CDATA[%s]]></Url>
-<<<<<<< HEAD
     	</item>
 		";
-=======
-    </item>
-";
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
         $item_str = "";
         foreach ($newsArray as $item){
             $item_str .= sprintf($itemTpl, $item['Title'], $item['Description'], $item['PicUrl'], $item['Url']);
         }
         $newsTpl = "<xml>
-<<<<<<< HEAD
 		<ToUserName><![CDATA[%s]]></ToUserName>
 		<FromUserName><![CDATA[%s]]></FromUserName>
 		<CreateTime>%s</CreateTime>
@@ -411,24 +311,6 @@ class wechatCallbackapiTest
         return $result;
     }
 
-=======
-<ToUserName><![CDATA[%s]]></ToUserName>
-<FromUserName><![CDATA[%s]]></FromUserName>
-<CreateTime>%s</CreateTime>
-<MsgType><![CDATA[news]]></MsgType>
-<Content><![CDATA[]]></Content>
-<ArticleCount>%s</ArticleCount>
-<Articles>
-$item_str</Articles>
-</xml>";
-        $result = sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), count($newsArray));
-        return $result;
-    }
-    private function logger($log_content)
-    {
-
-    }
->>>>>>> a09201484ead0110a53ffe5a2b7f1459db74f6d7
         
 }
 ?>
